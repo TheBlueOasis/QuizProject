@@ -1,0 +1,35 @@
+<div class='flex flex-col w-3/5 mx-auto mt-3 border border-2 rounded-lg border-purple bg-purple-ultralight p-5 shadow-lg text-lg'>
+  <h2 class='text-2xl font-bold'>Edit <%= resource_name.to_s.humanize %></h2>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <%= render 'devise/shared/error_messages', resource: resource %>
+    <div class='grid'>
+      <%= f.label :email %>
+      <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'border border-purple-light rounded', disabled: true %>
+
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+
+      <p class='text-xl font-bold mb-1 mt-3'>Want to change your password?</p>
+      <%= f.password_field :current_password, autocomplete: 'current-password', placeholder: 'Current password', class: 'mb-2 border border-purple-light rounded' %>
+
+      <% if @minimum_password_length %>
+        <p class='opacity-50 text-red text-xs mb-1'>(<%= @minimum_password_length %> characters minimum)</p>
+      <% end %>
+      <%= f.password_field :password, autocomplete: 'new-password', placeholder: 'New password', class: 'mb-2 border border-purple-light rounded' %>
+      <%= f.password_field :password_confirmation, autocomplete: 'new-password', placeholder: 'Confirm new password', class: 'border border-purple-light rounded' %>
+    </div>
+
+    <div class='actions'>
+      <%= f.submit 'Change', class: 'mb-3 bg-purple-light hover:bg-purple text-white font-bold px-3 rounded mt-3 border border-purple' %>
+    </div>
+  <% end %>
+
+  <div class='mb-3'>
+    <p class='text-xl font-bold mb-1'>Want to cancel your account?</p>
+    <%= button_to 'Cancel my account', registration_path(resource_name), class: 'bg-purple-light hover:bg-purple text-white font-bold px-3 rounded mt-3 border border-purple', data: { confirm: 'Are you sure?', turbo_confirm: 'Are you sure?' }, method: :delete %>
+  </div>
+  <div class='flex m-3'>
+    <%= link_to 'Back', quizzes_path, class: 'text-purple-light hover:text-purple cursor-pointer antialiased h-auto' %>
+  </div>
+</div>

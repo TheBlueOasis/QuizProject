@@ -1,0 +1,47 @@
+<%= form_with model: @quiz_answer, url: quizzes_complete_path, method: :post do |f| %>
+  <% quiz = @quiz[0] %>
+  <% questions = quiz.questions %>
+  <% if user_signed_in? %>
+    <%= f.hidden_field :name, value: current_user.email %>
+  <% end %>
+  
+  <%= f.hidden_field :quiz_id, value: quiz.id %>
+
+  <div class='mt-5 border rounded-2xl border-2 border-purple-light shadow-lg backdrop-blur-2xl backdrop-saturate-200 p-8'>
+    <div class='flex flex-col rounded-lg border-purple-light p-5 border-2 shadow-lg bg-purple-superlight'>
+      <p class='text-3xl'><%= quiz.name %></p> 
+      <p class='text-lg mt-10 mx-5 col-span-4'><%= quiz.description %></p>
+    </div>
+
+    <% questions.each.with_index do |q, i| %>
+      <div class='flex flex-col mt-10 p-5 w-auto border border-purple hover:bg-purple-superlight rounded-lg w-full col-span-6 shadow-md bg-purple-ultralight'>
+        <p class='font-bold'><%= "Q#{i + 1}" %></p>
+        <div class='mt-2 ml-10'>
+          <p class='font-bold'><%= q.name %></p>
+          <div  class='flex w-full flex-col mt-3'>
+            <%= f.fields_for :question_answers do |question_answer| %>
+              <% possible_answers = questions[question_answer.index].possible_answers %>
+              <% answer_count = possible_answers.count %>
+              <% if answer_count == 1 %>
+                <%= question_answer.text_area :answer, class: 'border border-purple hover:bg-purple-ultralight rounded-lg' %>
+              <% else %>
+                <% possible_answers.each do |possible_answer| %>
+                  <div class='flex items-center gap-2'>
+                    <%= question_answer.radio_button :answer, possible_answer.answer %>
+                    <%= possible_answer.answer %>
+                  </div>
+                <% end %>
+              <% end %>
+              <%= question_answer.hidden_field :quiz_answer_id, value: quiz.id %>
+              <%= question_answer.hidden_field :question_id, value: q.id %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <% if !user_signed_in? %>
+      <%= f.text_field :name, placeholder: 'Enter your name here', class: 'rounded-lg shadow-md' %>
+    <% end %>
+    <%= f.submit 'Turn In', class: 'bg-purple-light hover:bg-purple text-white font-bold py-2 px-3 rounded mt-5 ml-3 border border-purple' %>
+  </div>
+<% end %>

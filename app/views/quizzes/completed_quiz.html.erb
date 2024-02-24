@@ -1,0 +1,22 @@
+<% answer = @my_answer[0] %>
+<% quiz = answer.quiz %>
+
+<div class='grid grid-cols-6 mt-5 border rounded-2xl border-2 border-purple-light shadow-lg backdrop-blur-2xl backdrop-saturate-200 p-8'>
+  <div class='flex flex-col ml-5'>
+    <p class='text-3xl'><%= quiz.name %></p>
+    <p class='text-xs mt-1 mb-3 opacity-50'><%= "created by #{quiz.user.email } Taken #{created_ago(answer.created_at, DateTime.now())} ago" %></p>  
+    <p><%= %></p>  
+    <p class='font-bold <%= attempt_color(answer) %>'><%= "Your result: #{correct_out_of_total(answer)} (#{format_score(answer.score)})" %></p>
+  </div>
+  <p class='text-lg mt-10 mx-5 col-span-4'><%= quiz.description %></p>
+  <% answer.question_answers.each.with_index do |question_answer, i| %>
+    <div class='flex flex-col mt-10 p-5 w-auto border border-purple rounded-lg w-full col-span-6 shadow-md bg-purple-ultralight'>
+      <p class='font-bold'><%= "Q#{i + 1}" %><span class=<%= is_correct_color(question_answer) %>><%= " #{is_correct_number(question_answer)}/1" %></span></p>
+      <div class='mt-2 ml-10'>
+        <p class='text-xl font-bold'><%= question_answer.question.name %></p>
+        <p class='mt-2 font-bold'><span class=<%= is_correct_color(question_answer) %>>Your answer:</span>  <%= question_answer.answer %></p>
+        <p class='mt-2'><span class=''>Correct answer:</span> <%= correct_answer(question_answer.question.possible_answers) %></p>
+      </div>
+    </div>
+  <% end %>
+</div>

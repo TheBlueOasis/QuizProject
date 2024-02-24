@@ -1,0 +1,22 @@
+<nav class="mx-auto rounded-b-xl bg-opacity-80 py-2 px-4 shadow-md backdrop-blur-2xl backdrop-saturate-200 lg:px-8 lg:py-4 bg-gradient-to-tr from-purple-ultralight to-purple-superlight">
+  <div class="flex flex-row items-center">
+    <div class="container flex items-center gap-5">
+      <a href="/"><%= image_tag('/assets/logo.png', class: 'h-8') %></a>
+      <% if !user_signed_in? %>
+        <%= link_to_unless_current 'Home', root_path, class: 'text-purple-light hover:text-purple cursor-pointer antialiased h-auto' %>
+      <% end %>
+      <%= link_to_unless_current 'Quizzes', all_quizzes_path, class: 'text-purple-light hover:text-purple cursor-pointer antialiased h-auto' %>
+    </div>
+    <div class="flex flex-row w-full justify-end gap-4">
+      <% if user_signed_in? %>
+        <%= link_to_unless_current 'Your Attempts', completed_quizzes_path, class: 'text-purple-light hover:text-purple cursor-pointer antialiased h-auto' %>
+        <%= link_to_unless_current 'My Quizzes', quizzes_path, class: 'text-purple-light hover:text-purple cursor-pointer antialiased h-auto' %>
+        <%= link_to_unless_current 'Edit Profile', edit_user_registration_path, class: 'text-purple-light hover:text-purple cursor-pointer antialiased h-auto' %>
+        <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'text-purple-light hover:text-purple cursor-pointer antialiased h-auto' %>
+      <% else %>
+        <%= link_to_unless_current 'Sign Up', new_user_registration_path, class: 'text-purple-light hover:text-purple cursor-pointer antialiased h-auto' %>
+        <%= link_to_unless_current 'Log In', new_user_session_path, class: 'text-purple-light hover:text-purple cursor-pointer antialiased h-auto' %>
+      <% end %>
+    </div>
+  </div>
+</nav>

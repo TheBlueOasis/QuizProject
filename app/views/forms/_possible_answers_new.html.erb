@@ -1,0 +1,12 @@
+<div class='form-block hidden flex gap-2 items-center mb-3'>
+  <%= possible_answer.check_box :is_correct_answer, class: 'rounded-lg' %>
+  <%= possible_answer.text_field :answer, placeholder: 'Potential answer', class: 'rounded-lg w-full border border-purple-light shadow-sm bg-purple-ultralight' %>
+  <%= possible_answer.check_box :_destroy, class: 'remove-checkbox', style: 'display: none;' %>
+  <%= render 'buttons/remove_button', button_function: 'remove' %>
+</div>
+
+<div class='target'></div>
+
+<div class='flex justify-end mt-3'>
+  <%= render 'buttons/add_button', question_id: question.index, button_function: 'addNew' %>
+</div>

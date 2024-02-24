@@ -1,0 +1,13 @@
+<div class='form-block hidden flex gap-2 items-center mb-3'>
+  <%= possible_answer.check_box :is_correct_answer, class: 'rounded-lg' %>
+  <%= possible_answer.text_field :answer, placeholder: 'Potential answer', class: 'rounded-lg w-full border border-purple-light shadow-sm bg-purple-ultralight' %>
+  <%= possible_answer.hidden_field :_destroy, class: 'remove-checkbox' %>
+  <%= render 'buttons/remove_button', button_function: 'remove' %>
+</div>
+
+<div class='form-block flex gap-2 items-center mb-3'>
+  <%= possible_answer.check_box :is_correct_answer, class: 'rounded-lg' %>
+  <%= possible_answer.text_field :answer, placeholder: 'Potential answer', class: 'rounded-lg w-full border border-purple-light shadow-sm bg-purple-ultralight' %>
+  <%= possible_answer.hidden_field :_destroy, class: 'remove-checkbox' %>
+  <%= render 'buttons/remove_button', button_function: 'remove' %>
+</div>

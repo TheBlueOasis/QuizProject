@@ -1,0 +1,31 @@
+<%= form_with model: @quiz, url: quiz_path, data: {
+  controller: 'nested-form',
+  nested_form_wrapper_selector_value: '.nested-form-wrapper' 
+  }, method: :patch do |f| %>
+
+  <div class='flex flex-col w-3/5 mx-auto mt-3 border border-2 bg-purple-ultralight rounded-lg border-purple p-5 shadow-lg'>
+    <%= f.hidden_field :id %>
+    <%= f.label :name, class: 'text-lg mb-1' %>
+    <%= f.text_field :name, placeholder: 'Quiz Name', class: 'rounded-lg shadow-md' %>
+    <%= f.label :description, class: 'text-lg mt-3 mb-1' %>
+    <%= f.text_area :description, placeholder: 'Quiz Description', class: 'h-32 rounded-lg shadow-md' %>
+
+    <template data-nested-form-target='template'>
+      <%= f.fields_for :questions, Question.new, child_index: 'NEW_RECORD' do |question| %>
+        <%= render 'forms/question_form', question: question %>
+      <% end %>
+    </template>
+
+    <%= f.fields_for :questions do |question| %>    
+      <%= render 'forms/question_form', question: question %>
+    <% end %>
+
+    <div data-nested-form-target='target'></div>
+
+    <div class='flex justify-end mt-3'>
+      <%= render 'buttons/add_button_stimulus' %>
+    </div>
+
+    <%= f.submit class: 'bg-purple-light hover:bg-purple text-white font-bold py-2 px-3 rounded mt-3 border border-purple' %>
+  </div>
+<% end %>

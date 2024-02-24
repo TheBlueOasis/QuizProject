@@ -1,0 +1,23 @@
+
+
+<div class='flex flex-col'>
+   <% @quizzes.each do |quiz| %>
+   <% question_count = quiz.questions.count %>
+      <div class='flex mt-5 items-center justify-between gap-5 border bg-purple-ultralight rounded-2xl border-purple hover:bg-purple-superlight shadow-lg p-3'>
+        <div class='flex flex-col'>
+          <p class='text-2xl'><%= quiz.name %></p>
+          <p class='text-xs opacity-50'><%= "#{question_count} #{question_count == 1 ? 'question' : 'questions'}" %></p>
+          <p class='text-xs opacity-50'><%= "Created by #{quiz.user&.email}" %></p>
+          <p class='text-xs opacity-50'><%= "#{created_ago(quiz.created_at, DateTime.now())} ago" %></p>
+        </div>
+        <div class='flex items-center gap-5'>
+          <div class='flex flex-col'>
+            <p class="<%= difficulty_color(quiz) %>"><%= "Difficulty: #{quiz_difficulty(quiz)}"%></p>
+            <p><%= "Completions: #{quiz.quiz_answers.each.count}" %></p>
+            <p class='<%= avg_color(quiz) %>'><%= "Average: #{avg_score(quiz)}" %></p>
+          </div>
+          <%= link_to "Take Quiz", take_quiz_path(quiz.id), class: "bg-purple-light hover:bg-purple text-white font-bold py-2 px-3 rounded border border-purple" %>
+        </div>
+      </div>
+  <% end %>
+</div>

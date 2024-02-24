@@ -1,0 +1,34 @@
+<div class="question-form flex gap-2" data-new-record="<%= question.object.new_record? %>">
+  <div data-question-id="<%= question.index %>"  class="flex w-full flex-col border border-purple-light bg-purple-superlight shadow-lg rounded-xl p-5 mt-5"> 
+    <%= question.label 'Question', class: "text-lg mb-1" %>
+    <%= question.text_area :name, placeholder: "Question", class: "rounded-lg border border-purple-light mb-3 shadow-sm bg-purple-ultralight" %>
+
+    <label class="text-lg flex gap-2 items-center mb-1">
+      Answer
+      <span class="">
+        <%= render 'shared/answers_tooltip'%>
+      </span>
+    </label>
+    
+    <% if current_page?(:controller => 'quizzes', :action => 'new') %>
+      <%= question.fields_for :possible_answers, PossibleAnswer.new, child_index: 'new_answer' do |possible_answer| %>
+        <%= render 'forms/possible_answers_new', question: question, possible_answer: possible_answer %>
+      <% end %>
+    <% else %> 
+      <%= question.fields_for :possible_answers do |possible_answer| %>
+        <%= render 'forms/possible_answers_edit', question: question, possible_answer: possible_answer %>
+      <% end %>
+
+      <div class="target"></div>
+
+      <div class="flex justify-end mt-3">
+        <%= render 'buttons/add_button', question_id: question.index, button_function: 'addEdit' %>
+      </div>
+    <% end %>
+
+    <%= question.hidden_field :_destroy, class: "remove-question-checkbox" %>
+  </div>
+  <div class="mt-5">
+    <%= render 'buttons/remove_button', button_function: "removeQuestion"%>
+  </div>
+</div>
